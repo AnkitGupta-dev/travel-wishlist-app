@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: travel-wishlist-api
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb+srv://admin:admin123@cluster0.x9e6zkx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - key: JWT_SECRET
+        value: supersecretkey123
