@@ -80,10 +80,6 @@ npm start
 ```
 🌐 React app runs at: http://localhost:3000
 
-
----
-
-```markdown
 ## 🔐 Authentication Routes
 
 - `POST /api/auth/register` – Register a new user
