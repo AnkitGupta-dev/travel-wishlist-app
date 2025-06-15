@@ -56,7 +56,7 @@ const AddDestination = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/destinations", {
+      const res = await fetch("https://travel-wishlist-api.onrender.com/api/destinations", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

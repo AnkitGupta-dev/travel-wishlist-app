@@ -32,7 +32,7 @@ const EditDestination = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`http://localhost:5000/api/destinations/${id}`, {
+      const res = await fetch(`https://travel-wishlist-api.onrender.com/api/destinations/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       const data = await res.json();
@@ -79,7 +79,7 @@ const EditDestination = () => {
     formData.append("imagesToDelete", JSON.stringify(imagesToDelete));
     for (let img of newImages) formData.append("newImages", img);
 
-    const res = await fetch(`http://localhost:5000/api/destinations/${id}`, {
+    const res = await fetch(`https://travel-wishlist-api.onrender.com/api/destinations/${id}`, {
       method: "PUT",
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       body: formData,
@@ -170,7 +170,7 @@ const EditDestination = () => {
             {existingImages.map((img, idx) => (
               <Grid item xs={6} sm={4} md={3} key={idx}>
                 <img
-                  src={`http://localhost:5000/${img}`}
+                  src={`https://travel-wishlist-api.onrender.com/${img}`}
                   alt="existing"
                   style={{ width: "100%", borderRadius: 6 }}
                 />

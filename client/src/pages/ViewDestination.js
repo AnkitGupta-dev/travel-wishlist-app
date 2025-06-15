@@ -25,7 +25,7 @@ const ViewDestination = () => {
     const fetchDestination = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch(`http://localhost:5000/api/destinations/${id}`, {
+        const res = await fetch(`https://travel-wishlist-api.onrender.com/api/destinations/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -54,7 +54,7 @@ const ViewDestination = () => {
     if (!window.confirm("Are you sure you want to delete this destination?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/destinations/${id}`, {
+      const res = await fetch(`https://travel-wishlist-api.onrender.com/api/destinations/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
@@ -108,7 +108,7 @@ const ViewDestination = () => {
               {destination.images.map((img, index) => (
                 <Grid item xs={4} key={index}>
                   <img
-                    src={`http://localhost:5000/${img}`}
+                    src={`https://travel-wishlist-api.onrender.com/${img}`}
                     alt="Destination"
                     style={{ width: "100%", cursor: "pointer" }}
                     onClick={() => {
@@ -141,9 +141,9 @@ const ViewDestination = () => {
 
       {isOpen && (
         <Lightbox
-          mainSrc={`http://localhost:5000/${destination.images[lightboxIndex]}`}
-          nextSrc={`http://localhost:5000/${destination.images[(lightboxIndex + 1) % destination.images.length]}`}
-          prevSrc={`http://localhost:5000/${destination.images[(lightboxIndex + destination.images.length - 1) % destination.images.length]}`}
+          mainSrc={`https://travel-wishlist-api.onrender.com/${destination.images[lightboxIndex]}`}
+          nextSrc={`https://travel-wishlist-api.onrender.com/${destination.images[(lightboxIndex + 1) % destination.images.length]}`}
+          prevSrc={`https://travel-wishlist-api.onrender.com/${destination.images[(lightboxIndex + destination.images.length - 1) % destination.images.length]}`}
           onCloseRequest={() => setIsOpen(false)}
           onMovePrevRequest={() =>
             setLightboxIndex((lightboxIndex + destination.images.length - 1) % destination.images.length)

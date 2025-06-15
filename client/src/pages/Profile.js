@@ -36,7 +36,7 @@ const Profile = () => {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/update", {
+      const res = await fetch("https://travel-wishlist-api.onrender.com/api/auth/update", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

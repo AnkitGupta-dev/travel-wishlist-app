@@ -21,7 +21,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:5000/api/destinations", {
+      const res = await fetch("https://travel-wishlist-api.onrender.com/api/destinations", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -90,7 +90,7 @@ const Home = () => {
                   <CardMedia
                     component="img"
                     height="180"
-                    image={`http://localhost:5000/${dest.images[0]}`}
+                    image={`https://travel-wishlist-api.onrender.com/${dest.images[0]}`}
                     alt={dest.name}
                   />
                 ) : (
