@@ -20,6 +20,7 @@ Your personal travel journal and destination wishlist manager — built with MER
 - 🔒 **Authentication** (Register/Login)
 - ⚙️ **Change Password & Profile Settings**
 - 🗺️ **Interactive Map-based Location Picker**
+- 🌍 **World Map View**: See visited vs wishlist places pinned on a map
 - 💰 **Trip Budget & Itenary Planner** (upcoming)
 
 ---
@@ -96,7 +97,6 @@ npm start
 
 ## ✨ Upcoming Features
 
-- 🌍 **World Map View**: See visited vs wishlist places pinned on a map
 - 📊 **Trip Budget Planner**: Estimate your expenses for each trip
 - 🧠 **AI-based Travel Recommendation** (future)
 - 📨 **Share Destinations**: Share your dream trips with friends
