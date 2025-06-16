@@ -94,8 +94,21 @@ const EditDestination = () => {
   };
 
   return (
+    <Box sx={{ 
+          p: 3, 
+          minHeight: "100vh", 
+          background: "linear-gradient(to bottom, #fff7ec, #fde6bc)" 
+          }}>
     <Container maxWidth="md">
-      <Paper sx={{ p: 4, mt: 4 }}>
+      <Paper 
+      sx={{ 
+        p: 4, 
+        width: "90%",
+        borderRadius: 3,
+        background: "rgba(255, 247, 236, 0.9)",
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)", 
+        backdropFilter: "blur(3px)",
+        mt: 4 }}>
         <Typography variant="h5">Edit Destination</Typography>
         <form onSubmit={handleSubmit}>
           <TextField
@@ -198,6 +211,7 @@ const EditDestination = () => {
         </form>
       </Paper>
     </Container>
+    </Box>
   );
 };
 

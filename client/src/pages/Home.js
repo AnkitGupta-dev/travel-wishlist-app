@@ -55,7 +55,11 @@ const Home = () => {
     });
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ 
+      p: 3, 
+      minHeight: "100vh", 
+      background: "linear-gradient(to bottom, #fff7ec, #fde6bc)" 
+      }}>
       {/* Search, Sort, View Mode Toggle */}
       <Box
         sx={{
@@ -143,11 +147,13 @@ const Home = () => {
             <Box
               key={dest._id}
               sx={{
-                background: "#fff",
-                p: 2,
-                mb: 2,
-                borderRadius: 2,
-                boxShadow: 1,
+                background: "rgba(255, 247, 236, 0.9)", // warm paper-like tone
+                p: 3,
+                mb: 3,
+                borderRadius: 3,
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)", // soft drop shadow
+                maxWidth: "800px",
+                mx: "auto", // center the box
               }}
             >
               <Typography variant="h6">{dest.name}</Typography>

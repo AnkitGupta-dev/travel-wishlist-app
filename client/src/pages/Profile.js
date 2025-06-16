@@ -72,8 +72,21 @@ const Profile = () => {
   };
 
   return (
+    <Box sx={{ 
+      p: 3, 
+      minHeight: "100vh", 
+      background: "linear-gradient(to bottom, #fff7ec, #fde6bc)" 
+      }}>
     <Box display="flex" justifyContent="center" mt={5}>
-      <Paper elevation={3} sx={{ p: 4, width: 500 }}>
+      <Paper elevation={3} 
+      sx={{
+        p: 4, 
+        width: "100%",
+        borderRadius: 3,
+        background: "rgba(255, 247, 236, 0.9)",
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)", 
+        backdropFilter: "blur(3px)",
+        maxWidth: 500,}}>
         <Typography variant="h5" mb={2}>
           Edit Profile
         </Typography>
@@ -129,6 +142,7 @@ const Profile = () => {
           </Button>
         </form>
       </Paper>
+    </Box>
     </Box>
   );
 };

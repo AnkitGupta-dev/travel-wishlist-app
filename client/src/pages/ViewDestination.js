@@ -83,8 +83,18 @@ const ViewDestination = () => {
   }
 
   return (
+    <Box sx={{ p: 3, minHeight: "100vh", background: "linear-gradient(to bottom, #fff7ec, #fde6bc)" }}>
     <Box display="flex" justifyContent="center" mt={5}>
-      <Paper elevation={3} sx={{ p: 4, width: "90%", maxWidth: 800 }}>
+      <Paper 
+      elevation={3} 
+      sx={{ 
+        p: 4, 
+        width: "90%",
+        borderRadius: 3,
+        background: "rgba(255, 247, 236, 0.9)",
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)", 
+        backdropFilter: "blur(3px)",  
+        maxWidth: 800 }}>
         <Typography variant="h4" gutterBottom>
           {destination.name}
         </Typography>
@@ -153,6 +163,7 @@ const ViewDestination = () => {
           }
         />
       )}
+    </Box>
     </Box>
   );
 };

@@ -61,8 +61,21 @@ const Login = () => {
   };
 
   return (
+    <Box sx={{ 
+      p: 3, 
+      minHeight: "100vh", 
+      background: "linear-gradient(to bottom, #fff7ec, #fde6bc)" 
+      }}>
     <Container maxWidth="sm" sx={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
-      <Paper elevation={3} sx={{ p: 4, width: "100%" }}>
+      <Paper elevation={3} 
+        sx={{ 
+          p: 4, 
+          width: "100%",
+          borderRadius: 3,
+          background: "rgba(255, 247, 236, 0.9)",
+          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)", 
+          backdropFilter: "blur(3px)", 
+          }}>
         <Typography variant="h4" gutterBottom>
           Login
         </Typography>
@@ -105,6 +118,7 @@ const Login = () => {
         </form>
       </Paper>
     </Container>
+    </Box>
   );
 };
 

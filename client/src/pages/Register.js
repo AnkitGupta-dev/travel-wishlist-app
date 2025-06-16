@@ -61,8 +61,22 @@ const Register = () => {
   };
 
   return (
+    <Box sx={{ 
+      p: 3, 
+      minHeight: "100vh", 
+      background: "linear-gradient(to bottom, #fff7ec, #fde6bc)" 
+      }}>
     <Box display="flex" justifyContent="center" mt={8}>
-      <Paper elevation={3} sx={{ padding: 4, width: 400 }}>
+      <Paper elevation={3} 
+      sx={{
+        p: 4, 
+        width: "100%",
+        borderRadius: 3,
+        background: "rgba(255, 247, 236, 0.9)",
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)", 
+        backdropFilter: "blur(3px)", 
+        padding: 4, 
+        maxWidth: 400,}}>
         <Typography variant="h5" mb={3} textAlign="center">
           Register
         </Typography>
@@ -102,6 +116,7 @@ const Register = () => {
           </Button>
         </form>
       </Paper>
+    </Box>
     </Box>
   );
 };
