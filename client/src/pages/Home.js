@@ -13,6 +13,19 @@ import {
   Grid,
 } from "@mui/material";
 
+// Common button style
+const buttonStyle = {
+  marginLeft: 1,
+  backgroundColor: "#f4c16e", // warm soft orange
+  color: "#000",
+  fontWeight: 500,
+  textTransform: "none",
+  borderRadius: "6px",
+  "&:hover": {
+    backgroundColor: "#e5ae4d",
+  },
+};
+
 const Home = () => {
   const [destinations, setDestinations] = useState([]);
   const [search, setSearch] = useState("");
@@ -51,6 +64,7 @@ const Home = () => {
           flexWrap: "wrap",
           mb: 3,
           alignItems: "center",
+          justifyContent: "center"
         }}
       >
         <TextField
@@ -69,6 +83,7 @@ const Home = () => {
           <MenuItem value="name">Alphabetical</MenuItem>
         </Select>
         <Button
+          sx={buttonStyle}
           variant="contained"
           onClick={() => setViewMode(viewMode === "card" ? "journal" : "card")}
         >
@@ -78,9 +93,10 @@ const Home = () => {
 
       {/* Destination View */}
       {viewMode === "card" ? (
-        <Grid container spacing={3}>
-          {filtered.map((dest) => (
-            <Grid item xs={12} sm={6} md={4} key={dest._id}>
+        <Box sx={{ maxWidth: "1200px", mx: "auto" }}>
+          <Grid container spacing={3}>
+            {filtered.map((dest) => (
+              <Grid item xs={12} sm={6} md={4} key={dest._id}>
               <Card
                 component={Link}
                 to={`/destination/${dest._id}`}
@@ -120,6 +136,7 @@ const Home = () => {
             </Grid>
           ))}
         </Grid>
+        </Box>
       ) : (
         <Box>
           {filtered.map((dest) => (

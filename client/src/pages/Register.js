@@ -3,6 +3,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, TextField, Typography, Paper } from "@mui/material";
 
+// Common button style
+const buttonStyle = {
+  backgroundColor: "#f4c16e", // warm soft orange
+  color: "#000",
+  fontWeight: 500,
+  textTransform: "none",
+  borderRadius: "6px",
+  "&:hover": {
+    backgroundColor: "#e5ae4d",
+  },
+};
+
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -85,7 +97,7 @@ const Register = () => {
               {error}
             </Typography>
           )}
-          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ ...buttonStyle, mt: 2 }}>
             Register
           </Button>
         </form>

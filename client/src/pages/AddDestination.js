@@ -16,6 +16,18 @@ import LocationPicker from "../components/LocationPicker";
 import countries from "../data/countries";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+// Common button style
+const buttonStyle = {
+  backgroundColor: "#f4c16e", // warm soft orange
+  color: "#000",
+  fontWeight: 500,
+  textTransform: "none",
+  borderRadius: "6px",
+  "&:hover": {
+    backgroundColor: "#e5ae4d",
+  },
+};
+
 const AddDestination = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -151,10 +163,11 @@ const AddDestination = () => {
           <LocationPicker location={location} setLocation={setLocation} />
 
           <Button
+            
             variant="outlined"
             component="label"
             fullWidth
-            sx={{ mt: 2 }}
+            sx={{ ...buttonStyle, mt: 2 }}
           >
             Upload Images
             <input
@@ -216,7 +229,7 @@ const AddDestination = () => {
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ mt: 3 }}
+            sx={{ ...buttonStyle, mt: 3 }}
           >
             Add Destination
           </Button>

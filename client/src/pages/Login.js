@@ -11,6 +11,18 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+// Common button style
+const buttonStyle = {
+  backgroundColor: "#f4c16e", // warm soft orange
+  color: "#000",
+  fontWeight: 500,
+  textTransform: "none",
+  borderRadius: "6px",
+  "&:hover": {
+    backgroundColor: "#e5ae4d",
+  },
+};
+
 const Login = () => {
   const [identifier, setIdentifier] = useState(""); // username or email
   const [password, setPassword] = useState("");
@@ -49,39 +61,47 @@ const Login = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper elevation={3} sx={{ p: 4, mt: 5 }}>
+    <Container maxWidth="sm" sx={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
+      <Paper elevation={3} sx={{ p: 4, width: "100%" }}>
         <Typography variant="h4" gutterBottom>
           Login
         </Typography>
         <form onSubmit={handleSubmit}>
-          <Box mb={2}>
-            <TextField
-              label="Username or Email"
-              fullWidth
-              required
-              value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
-            />
-          </Box>
-          <Box mb={2}>
-            <TextField
-              label="Password"
-              type="password"
-              fullWidth
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Box>
-          {error && (
-            <Typography color="error" mb={2}>
-              {error}
-            </Typography>
-          )}
-          <Button variant="contained" color="primary" type="submit" fullWidth>
-            Login
-          </Button>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          gap={2}
+        >
+        <TextField
+          label="Username or Email"
+          value={identifier}
+          onChange={(e) => setIdentifier(e.target.value)}
+          required
+          sx={{ width: "100%" }}
+        />
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          sx={{ width: "100%" }}
+        />
+        {error && (
+        <Typography color="error" align="center">
+            {error}
+        </Typography>
+        )}
+        <Button
+          sx={{ ...buttonStyle, width: "100%" }} // 👈 ensures it's same width as inputs
+          variant="contained"
+          type="submit"
+        >
+          Login
+        </Button>
+        </Box>
         </form>
       </Paper>
     </Container>

@@ -8,6 +8,18 @@ import {
   Divider,
 } from "@mui/material";
 
+// Common button style
+const buttonStyle = {
+  backgroundColor: "#f4c16e", // warm soft orange
+  color: "#000",
+  fontWeight: 500,
+  textTransform: "none",
+  borderRadius: "6px",
+  "&:hover": {
+    backgroundColor: "#e5ae4d",
+  },
+};
+
 const Profile = () => {
   const [form, setForm] = useState({
     username: "",
@@ -112,7 +124,7 @@ const Profile = () => {
             </Typography>
           )}
 
-          <Button type="submit" variant="contained" fullWidth sx={{ mt: 3 }}>
+          <Button type="submit" variant="contained" fullWidth sx={{ ...buttonStyle, mt: 3 }}>
             Update Profile
           </Button>
         </form>
