@@ -12,6 +12,7 @@ import {
   Button,
   Grid,
 } from "@mui/material";
+import MapView from "../components/MapView";
 
 // Common button style
 const buttonStyle = {
@@ -94,6 +95,12 @@ const Home = () => {
           {viewMode === "card" ? "Switch to Journal View" : "Switch to Card View"}
         </Button>
       </Box>
+
+      {filtered.length > 0 && (
+        <Box sx={{ maxWidth: "900px", mx: "auto", mt: 3 }}>
+          <MapView destinations={filtered} />
+        </Box>
+      )}
 
       {/* Destination View */}
       {viewMode === "card" ? (
