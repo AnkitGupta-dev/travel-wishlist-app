@@ -14,6 +14,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import countries from "../data/countries";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const EditDestination = () => {
   const { id } = useParams();
@@ -180,25 +181,57 @@ const EditDestination = () => {
             Existing Images
           </Typography>
           <Grid container spacing={2}>
-            {existingImages.map((img, idx) => (
-              <Grid item xs={6} sm={4} md={3} key={idx}>
-                <img
-                  src={`https://travel-wishlist-api.onrender.com/${img}`}
-                  alt="existing"
-                  style={{ width: "100%", borderRadius: 6 }}
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={imagesToDelete.includes(img)}
-                      onChange={() => handleCheckbox(img)}
+            {existingImages.map((img, idx) => {
+              const isSelected = imagesToDelete.includes(img);
+              return (
+                <Grid item xs={6} sm={4} md={3} key={idx}>
+                  <Box
+                    sx={{
+                      position: "relative",
+                      height: 180,
+                      borderRadius: 2,
+                      overflow: "hidden",
+                      backgroundColor: "#f0f0f0",
+                      border: isSelected ? "3px solid #f44336" : "2px solid transparent",
+                      boxShadow: isSelected ? "0 0 10px rgba(244, 67, 54, 0.6)" : "",
+                      transition: "all 0.3s ease",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleCheckbox(img)}
+                  >
+                    <img
+                      src={`https://travel-wishlist-api.onrender.com/${img}`}
+                      alt="existing"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                        borderRadius: 6,
+                      }}
                     />
-                  }
-                  label="Delete"
-                />
-              </Grid>
-            ))}
+                    <DeleteIcon
+                      sx={{
+                        position: "absolute",
+                        top: 8,
+                        right: 8,
+                        backgroundColor: "white",
+                        borderRadius: "50%",
+                        padding: "4px",
+                        fontSize: 24,
+                        color: isSelected ? "#f44336" : "#555",
+                        boxShadow: "0 1px 4px rgba(0,0,0,0.3)",
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          color: "#f44336",
+                        },
+                      }}
+                    />
+                  </Box>
+                </Grid>
+              );
+            })}
           </Grid>
+
 
           <Typography mt={2}>Add New Images</Typography>
           <input type="file" multiple onChange={handleFileChange} />

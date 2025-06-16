@@ -6,19 +6,17 @@ import {
   Typography,
   Button,
   Paper,
-  Grid,
   CircularProgress,
 } from "@mui/material";
-import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const ViewDestination = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [destination, setDestination] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -82,88 +80,144 @@ const ViewDestination = () => {
     );
   }
 
+  const NextArrow = (props) => {
+  const { onClick } = props;
+  return (
+    <div
+      style={{
+        position: "absolute",
+        right: 10,
+        top: "50%",
+        transform: "translateY(-50%)",
+        zIndex: 5,
+        fontSize: "36px",
+        color: "#ff7043",
+        cursor: "pointer",
+      }}
+      onClick={onClick}
+    >
+      🢂
+    </div>
+  );
+};
+
+const PrevArrow = (props) => {
+  const { onClick } = props;
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 10,
+        top: "50%",
+        transform: "translateY(-50%)",
+        zIndex: 5,
+        fontSize: "36px",
+        color: "#ff7043",
+        cursor: "pointer",
+      }}
+      onClick={onClick}
+    >
+      🢀
+    </div>
+  );
+};
+
+
+  const sliderSettings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: true,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
+};
+
+
   return (
     <Box sx={{ p: 3, minHeight: "100vh", background: "linear-gradient(to bottom, #fff7ec, #fde6bc)" }}>
-    <Box display="flex" justifyContent="center" mt={5}>
-      <Paper 
-      elevation={3} 
-      sx={{ 
-        p: 4, 
-        width: "90%",
-        borderRadius: 3,
-        background: "rgba(255, 247, 236, 0.9)",
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)", 
-        backdropFilter: "blur(3px)",  
-        maxWidth: 800 }}>
-        <Typography variant="h4" gutterBottom>
-          {destination.name}
-        </Typography>
-        <Typography variant="body1" gutterBottom>
-          <strong>Journal:</strong> {destination.journal}
-        </Typography>
-        <Typography variant="body2" gutterBottom>
-          <strong>Visited:</strong> {destination.visited ? "Yes" : "No"}
-        </Typography>
-        <Typography variant="body2" gutterBottom>
-          <strong>Location:</strong>{" "}
-          {destination.location?.lat}, {destination.location?.lng}
-        </Typography>
+      <Box display="flex" justifyContent="center" mt={5}>
+        <Paper
+          elevation={3}
+          sx={{
+            p: 4,
+            width: "90%",
+            borderRadius: 3,
+            background: "rgba(255, 247, 236, 0.9)",
+            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+            backdropFilter: "blur(3px)",
+            maxWidth: 800,
+          }}
+        >
+          <Typography variant="h4" gutterBottom>
+            {destination.name}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            <strong>Journal:</strong> {destination.journal}
+          </Typography>
+          <Typography variant="body2" gutterBottom>
+            <strong>Visited:</strong> {destination.visited ? "Yes" : "No"}
+          </Typography>
+          <Typography variant="body2" gutterBottom>
+            <strong>Location:</strong> {destination.location?.lat}, {destination.location?.lng}
+          </Typography>
 
-        {destination.images.length > 0 && (
-          <>
-            <Typography variant="h6" mt={3} mb={1}>
-              Images
-            </Typography>
-            <Grid container spacing={2}>
-              {destination.images.map((img, index) => (
-                <Grid item xs={4} key={index}>
-                  <img
-                    src={`https://travel-wishlist-api.onrender.com/${img}`}
-                    alt="Destination"
-                    style={{ width: "100%", cursor: "pointer" }}
-                    onClick={() => {
-                      setLightboxIndex(index);
-                      setIsOpen(true);
-                    }}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </>
-        )}
+          {destination.images.length > 0 && (
+            <>
+              <Typography variant="h6" mt={3} mb={2}>
+                Images
+              </Typography>
+              <Slider {...sliderSettings}>
+                {destination.images.map((img, index) => (
+                  <Box key={index} display="flex" justifyContent="center">
+                    <Box
+                      key={index}
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      sx={{
+                        height: 400,
+                        width: "100%",
+                        backgroundColor: "rgba(255, 247, 236, 0.9)",
+                        borderRadius: "8px",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <img
+                        src={`https://travel-wishlist-api.onrender.com/${img}`}
+                        alt="Destination"
+                        style={{
+                          maxHeight: "100%",
+                          maxWidth: "100%",
+                          objectFit: "contain",
+                        }}
+                      />
+                    </Box>
 
-        {currentUser === destination.userId && (
-          <Box mt={4} display="flex" gap={2}>
-            <Button
-              variant="outlined"
-              color="primary"
-              component={Link}
-              to={`/edit/${destination._id}`}
-            >
-              Edit
-            </Button>
-            <Button variant="outlined" color="error" onClick={handleDelete}>
-              Delete
-            </Button>
-          </Box>
-        )}
-      </Paper>
+                  </Box>
+                ))}
+              </Slider>
+            </>
+          )}
 
-      {isOpen && (
-        <Lightbox
-          mainSrc={`https://travel-wishlist-api.onrender.com/${destination.images[lightboxIndex]}`}
-          nextSrc={`https://travel-wishlist-api.onrender.com/${destination.images[(lightboxIndex + 1) % destination.images.length]}`}
-          prevSrc={`https://travel-wishlist-api.onrender.com/${destination.images[(lightboxIndex + destination.images.length - 1) % destination.images.length]}`}
-          onCloseRequest={() => setIsOpen(false)}
-          onMovePrevRequest={() =>
-            setLightboxIndex((lightboxIndex + destination.images.length - 1) % destination.images.length)
-          }
-          onMoveNextRequest={() =>
-            setLightboxIndex((lightboxIndex + 1) % destination.images.length)
-          }
-        />
-      )}
-    </Box>
+          {currentUser === destination.userId && (
+            <Box mt={4} display="flex" gap={2}>
+              <Button
+                variant="outlined"
+                color="primary"
+                component={Link}
+                to={`/edit/${destination._id}`}
+              >
+                Edit
+              </Button>
+              <Button variant="outlined" color="error" onClick={handleDelete}>
+                Delete
+              </Button>
+            </Box>
+          )}
+        </Paper>
+      </Box>
     </Box>
   );
 };
