@@ -1,10 +1,10 @@
-# 🌍 Travel Wishlist App
+# 🌍 ManzilWay - Your Personal Travel Guide
 
 Your personal travel journal and destination wishlist manager — built with MERN Stack (MongoDB, Express.js, React, Node.js).
 
 ## ✈️ Live Demo
 
-- **Frontend:** [https://travel-wishlist-app.vercel.app](https://travel-wishlist-app.vercel.app)
+- **Frontend:** [https://manzilway.vercel.app/](https://manzilway.vercel.app/)
 - **Backend API:** [https://travel-wishlist-api.onrender.com](https://travel-wishlist-api.onrender.com)
 
 ---
@@ -20,8 +20,7 @@ Your personal travel journal and destination wishlist manager — built with MER
 - 🔒 **Authentication** (Register/Login)
 - ⚙️ **Change Password & Profile Settings**
 - 🗺️ **Interactive Map-based Location Picker**
-- 📍 **World Map View** (Visited vs Wishlist pins — upcoming)
-- 💰 **Trip Budget Planner** (upcoming)
+- 💰 **Trip Budget & Itenary Planner** (upcoming)
 
 ---
 
@@ -92,7 +91,7 @@ npm start
 - **Frontend deployed on:** [Vercel](https://vercel.com)
 - **Backend deployed on:** [Render](https://render.com)
 
-> 🌐 Live App: [https://travel-wishlist-app.vercel.app](https://travel-wishlist-app.vercel.app)  
+> 🌐 Live App: [https://manzilway.vercel.app/](https://manzilway.vercel.app/)  
 > ⚙️ Backend API: [https://travel-wishlist-api.onrender.com](https://travel-wishlist-api.onrender.com)
 
 ## ✨ Upcoming Features
