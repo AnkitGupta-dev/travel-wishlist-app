@@ -10,9 +10,11 @@ import {
   FormControlLabel,
   Checkbox,
   MenuItem,
+  IconButton,
 } from "@mui/material";
 import LocationPicker from "../components/LocationPicker";
 import countries from "../data/countries";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const AddDestination = () => {
   const navigate = useNavigate();
@@ -24,6 +26,8 @@ const AddDestination = () => {
   });
   const [location, setLocation] = useState(null);
   const [images, setImages] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [imageUploadMessage, setImageUploadMessage] = useState("");
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -32,7 +36,20 @@ const AddDestination = () => {
   };
 
   const handleImageChange = (e) => {
-    setImages(e.target.files);
+    const files = Array.from(e.target.files);
+    setImages(files);
+    setImagePreviews(files.map((file) => URL.createObjectURL(file)));
+    setImageUploadMessage(`${files.length} image(s) selected ✅`);
+  };
+
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...images];
+    const updatedPreviews = [...imagePreviews];
+    updatedImages.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+    setImages(updatedImages);
+    setImagePreviews(updatedPreviews);
+    setImageUploadMessage(`${updatedImages.length} image(s) selected ✅`);
   };
 
   const handleSubmit = async (e) => {
@@ -133,13 +150,63 @@ const AddDestination = () => {
 
           <LocationPicker location={location} setLocation={setLocation} />
 
-          <Button variant="contained" component="label" fullWidth sx={{ mt: 2 }}>
+          <Button
+            variant="outlined"
+            component="label"
+            fullWidth
+            sx={{ mt: 2 }}
+          >
             Upload Images
-            <input type="file" multiple hidden onChange={handleImageChange} />
+            <input
+              type="file"
+              hidden
+              multiple
+              accept="image/*"
+              onChange={handleImageChange}
+            />
           </Button>
 
+          {imageUploadMessage && (
+            <Typography color="success.main" mt={1}>
+              {imageUploadMessage}
+            </Typography>
+          )}
+
+          {/* Image Previews with Remove */}
+          <Box mt={2} display="flex" flexWrap="wrap" gap={2}>
+            {imagePreviews.map((url, index) => (
+              <Box key={index} position="relative">
+                <img
+                  src={url}
+                  alt={`preview-${index}`}
+                  style={{
+                    width: "120px",
+                    height: "100px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc",
+                  }}
+                />
+                <IconButton
+                  size="small"
+                  onClick={() => handleRemoveImage(index)}
+                  sx={{
+                    position: "absolute",
+                    top: -10,
+                    right: -10,
+                    backgroundColor: "#fff",
+                    boxShadow: 1,
+                    ":hover": { backgroundColor: "#f44336", color: "#fff" },
+                  }}
+                >
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </Box>
+            ))}
+          </Box>
+
           {error && (
-            <Typography color="error" mt={1}>
+            <Typography color="error" mt={2}>
               {error}
             </Typography>
           )}

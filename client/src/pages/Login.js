@@ -9,6 +9,7 @@ import {
   Paper,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [identifier, setIdentifier] = useState(""); // username or email
@@ -16,27 +17,31 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const { login } = useAuth(); // ✅ Use login from AuthContext
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      const res = await fetch("https://travel-wishlist-api.onrender.com/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ identifier, password }),
-      });
+      const res = await fetch(
+        "https://travel-wishlist-api.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ identifier, password }),
+        }
+      );
 
       const data = await res.json();
 
       if (!res.ok) {
         setError(data.message || "Login failed");
       } else {
-        localStorage.setItem("token", data.token);
-        navigate("/");
+        login(data.token);       // ✅ Call context login
+        navigate("/");           // ✅ Redirect to homepage
       }
     } catch (err) {
       setError("Something went wrong. Try again.");
