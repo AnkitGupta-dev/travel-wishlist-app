@@ -7,15 +7,17 @@ const path = require("path");
 const verifyToken = require("../middleware/verifyToken");
 
 // -------- Multer Setup --------
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + "-" + file.originalname);
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("../utils/cloudinary");
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "travel-destinations", // you can name this whatever you want
+    allowed_formats: ["jpg", "jpeg", "png"],
   },
 });
+
 const upload = multer({ storage });
 
 // -------- GET all destinations --------
@@ -53,7 +55,7 @@ router.post("/", verifyToken, upload.array("images", 10), async (req, res) => {
       return res.status(400).json({ message: "Name and location are required" });
     }
 
-    const images = req.files.map((file) => file.path.replace(/\\/g, "/"));
+    const images = req.files.map((file) => file.path || file.filename || file.originalname || file.url || file.location || file.secure_url || file?.path || file?.secure_url || file?.url || file.path || file.secure_url || file.url || file.path || file.path || file.url || file?.path || file.path || file.url || file.secure_url || file.url);
 
     const destination = new Destination({
       name,
