@@ -104,21 +104,22 @@ router.put("/:id", verifyToken, upload.array("newImages", 10), async (req, res) 
     if (visited !== undefined) destination.visited = visited === "true";
     if (location) destination.location = JSON.parse(location);
 
+    // Delete selected images
     if (req.body.imagesToDelete) {
       const imagesToDelete = JSON.parse(req.body.imagesToDelete);
-      destination.images = destination.images.filter((img) => {
-        if (imagesToDelete.includes(img)) {
-          const imgPath = path.join(__dirname, "..", img);
-          if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
-          return false;
-        }
-        return true;
-      });
+      destination.images = destination.images.filter((img) => !imagesToDelete.includes(img));
     }
 
+    // Upload new images to Cloudinary
     if (req.files && req.files.length > 0) {
-      const newImagePaths = req.files.map((file) => file.path.replace(/\\/g, "/"));
-      destination.images.push(...newImagePaths);
+      for (const file of req.files) {
+        const b64 = Buffer.from(file.buffer).toString("base64");
+        const dataURI = `data:${file.mimetype};base64,${b64}`;
+        const uploadRes = await cloudinary.uploader.upload(dataURI, {
+          folder: "travel-wishlist",
+        });
+        destination.images.push(uploadRes.secure_url);
+      }
     }
 
     await destination.save();
@@ -128,6 +129,7 @@ router.put("/:id", verifyToken, upload.array("newImages", 10), async (req, res) 
     res.status(500).json({ message: "Server error during update" });
   }
 });
+
 
 // -------- DELETE destination --------
 router.delete("/:id", verifyToken, async (req, res) => {
