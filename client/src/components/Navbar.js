@@ -42,6 +42,12 @@ const NavBar = () => {
         <Box display="flex" alignItems="center">
           {user ? (
             <>
+              <Button sx={buttonStyle} component={Link} to="/tripplanner">
+                Plan Your Trip
+              </Button>
+              <Button sx={buttonStyle} component={Link} to="/tripplans">
+                My Plans
+              </Button>
               <Button sx={buttonStyle} component={Link} to="/add">Add Destination</Button>
               <Button sx={buttonStyle} component={Link} to="/profile">Profile</Button>
               <Button sx={buttonStyle} onClick={logout}>Logout</Button>

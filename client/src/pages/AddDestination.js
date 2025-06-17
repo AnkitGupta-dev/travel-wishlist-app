@@ -123,9 +123,11 @@ const AddDestination = () => {
         boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)", 
         backdropFilter: "blur(3px)",
         }}>
-        <Typography variant="h5" mb={3}>
-          Add Destination
+          <Box display="flex" justifyContent="center">
+        <Typography variant="h4" mb={3}>
+          <b>Add Destination</b>
         </Typography>
+        </Box>
         <form onSubmit={handleSubmit}>
           <TextField
             label="Destination Name"

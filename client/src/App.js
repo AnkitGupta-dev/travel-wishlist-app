@@ -9,6 +9,9 @@ import AddDestination from "./pages/AddDestination";
 import ViewDestination from "./pages/ViewDestination";
 import EditDestination from "./pages/EditDestination";
 import Profile from "./pages/Profile";
+import TripPlanner from "./pages/TripPlanner";
+import TripPlans from "./pages/TripPlans";
+import ViewTripPlan from "./pages/ViewTripPlan";
 
 function AppRoutes() {
   const { user } = useAuth();
@@ -39,6 +42,7 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route path="/trip-plans/:id" element={<ViewTripPlan />} />
       <Route
         path="/destination/:id"
         element={
@@ -47,6 +51,8 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route path="/tripplanner" element={<TripPlanner />} />
+      <Route path="/tripplans" element={<TripPlans />} />
       <Route
         path="/edit/:id"
         element={
