@@ -24,7 +24,7 @@ const upload = multer({ storage }); // using memoryStorage now
 // -------- GET all destinations --------
 router.get("/", verifyToken, async (req, res) => {
   try {
-    const destinations = await Destination.find({ userId: req.userId });
+    const destinations = await Destination.find({ userId: req.user.id });
     res.json(destinations);
   } catch (err) {
     console.error("GET error:", err);
@@ -36,7 +36,7 @@ router.get("/", verifyToken, async (req, res) => {
 router.get("/:id", verifyToken, async (req, res) => {
   try {
     const destination = await Destination.findById(req.params.id);
-    if (!destination || destination.userId.toString() !== req.userId) {
+    if (!destination || destination.userId.toString() !== req.user.id) {
       return res.status(404).json({ message: "Destination not found" });
     }
     res.json(destination);
@@ -74,7 +74,7 @@ router.post("/", verifyToken, upload.array("images", 10), async (req, res) => {
       location: JSON.parse(location),
       countryCode,
       images: uploadedImages,
-      userId: req.userId,
+      userId: req.user.id,
     });
 
     await destination.save();
@@ -92,7 +92,7 @@ router.put("/:id", verifyToken, upload.array("newImages", 10), async (req, res) 
     const destination = await Destination.findById(req.params.id);
     if (!destination) return res.status(404).json({ message: "Not found" });
 
-    if (destination.userId.toString() !== req.userId) {
+    if (destination.userId.toString() !== req.user.id) {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
@@ -135,7 +135,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
     const destination = await Destination.findById(req.params.id);
     if (!destination) return res.status(404).json({ message: "Not found" });
 
-    if (destination.userId.toString() !== req.userId) {
+    if (destination.userId.toString() !== req.user.id) {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
