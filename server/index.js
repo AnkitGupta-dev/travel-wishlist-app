@@ -7,6 +7,7 @@ const cors = require('cors');
 // Import Routes
 const authRoutes = require('./routes/auth');
 const destinationRoutes = require('./routes/destinations');
+const tripPlanRoutes = require('./routes/tripPlan');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,6 +21,7 @@ app.use('/uploads', express.static('uploads'));
 // Routes
 app.use('/api/auth', authRoutes); // ✅ Auth routes (register/login)
 app.use('/api/destinations', destinationRoutes); // ✅ Destinations CRUD
+app.use('/api/tripplans', tripPlanRoutes);
 
 // MongoDB Connection + Start Server
 mongoose.connect(process.env.MONGO_URI)
