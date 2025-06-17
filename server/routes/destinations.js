@@ -46,16 +46,29 @@ router.get("/:id", verifyToken, async (req, res) => {
 });
 
 // -------- POST new destination --------
+const { cloudinary } = require("../utils/cloudinary"); // add this at top if not already
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage }); // using memoryStorage now
+
 router.post("/", verifyToken, upload.array("images", 10), async (req, res) => {
   try {
-    const { name, notes, journal, visited, location } = req.body;
+    const { name, notes, journal, visited, location, countryCode } = req.body;
 
-    // Basic validation
-    if (!name || !location) {
-      return res.status(400).json({ message: "Name and location are required" });
+    if (!name || !location || !countryCode) {
+      return res.status(400).json({ message: "Name, location, and country are required" });
     }
 
-    const images = req.files.map((file) => file.path || file.filename || file.originalname || file.url || file.location || file.secure_url || file?.path || file?.secure_url || file?.url || file.path || file.secure_url || file.url || file.path || file.path || file.url || file?.path || file.path || file.url || file.secure_url || file.url);
+    // 🌩 Upload to Cloudinary
+    let uploadedImages = [];
+    for (const file of req.files) {
+      const b64 = Buffer.from(file.buffer).toString("base64");
+      const dataURI = `data:${file.mimetype};base64,${b64}`;
+      const uploadRes = await cloudinary.uploader.upload(dataURI, {
+        folder: "travel-wishlist",
+      });
+      uploadedImages.push(uploadRes.secure_url); // get Cloudinary image URL
+    }
 
     const destination = new Destination({
       name,
@@ -63,17 +76,19 @@ router.post("/", verifyToken, upload.array("images", 10), async (req, res) => {
       journal,
       visited: visited === "true",
       location: JSON.parse(location),
-      images,
+      countryCode,
+      images: uploadedImages,
       userId: req.userId,
     });
 
     await destination.save();
     res.status(201).json(destination);
   } catch (err) {
-    console.error("POST error (create):", err);
+    console.error("Cloudinary POST error:", err);
     res.status(500).json({ message: "Error creating destination" });
   }
 });
+
 
 // -------- PUT (update) destination --------
 router.put("/:id", verifyToken, upload.array("newImages", 10), async (req, res) => {
