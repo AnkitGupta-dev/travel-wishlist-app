@@ -10,7 +10,7 @@ const verifyToken = require("../middleware/verifyToken");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("../utils/cloudinary");
 
-const storage = new CloudinaryStorage({
+const Storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "travel-destinations", // you can name this whatever you want
@@ -18,7 +18,11 @@ const storage = new CloudinaryStorage({
   },
 });
 
-const upload = multer({ storage });
+
+const { cloudinary } = require("../utils/cloudinary"); // add this at top if not already
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage }); // using memoryStorage now
 
 // -------- GET all destinations --------
 router.get("/", verifyToken, async (req, res) => {
@@ -46,11 +50,6 @@ router.get("/:id", verifyToken, async (req, res) => {
 });
 
 // -------- POST new destination --------
-const { cloudinary } = require("../utils/cloudinary"); // add this at top if not already
-const multer = require("multer");
-const storage = multer.memoryStorage();
-const upload = multer({ storage }); // using memoryStorage now
-
 router.post("/", verifyToken, upload.array("images", 10), async (req, res) => {
   try {
     const { name, notes, journal, visited, location, countryCode } = req.body;
