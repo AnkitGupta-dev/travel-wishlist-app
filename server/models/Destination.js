@@ -24,6 +24,23 @@ const DestinationSchema = new mongoose.Schema({
   },
   images: [String],
   reminderDate: Date,
+  
+  budget: {
+    transportation: { type: Number, default: 0 },
+    accommodation: { type: Number, default: 0 },
+    food: { type: Number, default: 0 },
+    activities: { type: Number, default: 0 },
+    others: { type: Number, default: 0 },
+    total: { type: Number, default: 0 },
+  },
+  itinerary: [
+    {
+      day: Number,
+      title: String,
+      description: String,
+    }
+  ],
+
 }, { timestamps: true });
 
 module.exports = mongoose.model("Destination", DestinationSchema);

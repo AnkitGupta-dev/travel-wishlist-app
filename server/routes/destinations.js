@@ -139,4 +139,79 @@ router.delete("/:id", verifyToken, async (req, res) => {
   }
 });
 
+// -------- PUT (update budget + itinerary) --------
+router.put("/:id/plan", verifyToken, async (req, res) => {
+  try {
+    const destination = await Destination.findById(req.params.id);
+    if (!destination) return res.status(404).json({ message: "Destination not found" });
+
+    if (destination.userId.toString() !== req.userId) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    const { budget, itinerary } = req.body;
+
+    if (budget) destination.budget = budget;
+    if (itinerary) destination.itinerary = itinerary;
+
+    await destination.save();
+    res.json({ message: "Plan updated successfully", destination });
+  } catch (err) {
+    console.error("PUT error (plan update):", err);
+    res.status(500).json({ message: "Error updating trip plan" });
+  }
+});
+
+// -------- POST Trip Plan (Budget + Itinerary) --------
+router.post("/:id/plan", verifyToken, async (req, res) => {
+  try {
+    const destination = await Destination.findById(req.params.id);
+    if (!destination) return res.status(404).json({ message: "Destination not found" });
+
+    if (destination.userId.toString() !== req.userId) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    const { budget, itinerary } = req.body;
+    if (budget) {
+      destination.budget = {
+        ...budget,
+        total:
+          (budget.transportation || 0) +
+          (budget.accommodation || 0) +
+          (budget.food || 0) +
+          (budget.activities || 0) +
+          (budget.others || 0),
+      };
+    }
+    if (itinerary) destination.itinerary = itinerary;
+
+    await destination.save();
+    res.status(200).json({ message: "Trip plan added successfully", destination });
+  } catch (err) {
+    console.error("POST /:id/plan error:", err);
+    res.status(500).json({ message: "Server error while adding plan" });
+  }
+});
+
+// -------- GET Budget & Itinerary for a Destination --------
+router.get("/:id/plan", verifyToken, async (req, res) => {
+  try {
+    const destination = await Destination.findById(req.params.id);
+
+    if (!destination || destination.userId.toString() !== req.userId) {
+      return res.status(404).json({ message: "Destination not found" });
+    }
+
+    res.json({
+      budget: destination.budget || {},
+      itinerary: destination.itinerary || [],
+    });
+  } catch (err) {
+    console.error("GET /:id/plan error:", err);
+    res.status(500).json({ message: "Server error while fetching trip plan" });
+  }
+});
+
+
 module.exports = router;
