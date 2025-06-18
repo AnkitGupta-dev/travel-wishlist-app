@@ -44,7 +44,7 @@ const MapView = ({ destinations }) => {
         center={[20, 0]}
         zoom={2}
         minZoom={2}
-        maxZoom={5}
+        maxZoom={50}
         scrollWheelZoom={true}
         zoomSnap={0.5}
         style={{ 

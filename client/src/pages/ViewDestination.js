@@ -184,9 +184,7 @@ const PrevArrow = (props) => {
                         overflow: "hidden",
                       }}
                     >
-                      <img
-                        src={`https://travel-wishlist-api.onrender.com/${img}`}
-                        alt="Destination"
+                      <img src={img} alt="Destination"
                         style={{
                           maxHeight: "100%",
                           maxWidth: "100%",

@@ -83,6 +83,7 @@ router.post("/", verifyToken, upload.array("images", 10), async (req, res) => {
     console.error("Cloudinary POST error:", err);
     res.status(500).json({ message: "Error creating destination" });
   }
+  
 });
 
 

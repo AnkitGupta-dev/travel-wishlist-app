@@ -117,7 +117,7 @@ const Home = () => {
                   <CardMedia
                     component="img"
                     height="180"
-                    image={`https://travel-wishlist-api.onrender.com/${dest.images[0]}`}
+                    image={dest.images[0]}
                     alt={dest.name}
                   />
                 ) : (
